@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Проверка на палиндром</title>
+    <script src='js/script_palindrome_recursively.js' type='text/javascript'></script>
+</head>
+
+<body>
+
+<input onclick='checkString()' type='button' value='Введите строку'>
+</body>
+<script>
+    function checkString() {
+        let testString = prompt('Введите строку');
+        let result;
+
+        if (checkIfPalindrome(testString)) {
+            result = "это палиндром";
+        } else {
+            result = "это не палиндром";
+        }
+
+        alert(result);
+    }
+
+
+</script>
+
+
+</html>

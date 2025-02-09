@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Удаление пробелов по краям</title>
+    <script src='js/script.js' type='text/javascript'></script>
+</head>
+
+<body>
+
+<input onclick='checkString()' type='button' value='Введите строку'>
+</body>
+<script>
+    function checkString() {
+        let testString = prompt('Введите строку');
+        let resultString;
+
+        if (testString.length === 0) {
+            alert("Введена пустая строка");
+        } else {
+            resultString = removeWhitespaces(testString);
+        }
+
+        alert('Итоговая строка: \n' + "*" + resultString + "*");
+    }
+
+
+</script>
+
+
+</html>

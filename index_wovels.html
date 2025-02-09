@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Подсчет количества русских гласных букв</title>
+    <script src='js/vowels.js' type='text/javascript'></script>
+</head>
+
+<body>
+
+<input onclick='checkString()' type='button' value='Введите строку'>
+</body>
+<script>
+    function checkString() {
+        let testString = prompt('Введите строку');
+        let result = countVowels(testString);
+
+        alert(`Количество русских гласных букв в строке "${testString}": ${result}`);
+    }
+
+
+</script>
+
+
+</html>

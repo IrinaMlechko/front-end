@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Удаление пробелов по краям</title>
+    <script src='js/script.js' type='text/javascript'></script>
+</head>
+
+<body>
+
+<input onclick='getStringAndWrap()' type='button' value='Тест'>
+</body>
+<script>
+
+    function getStringAndWrap() {
+
+        console.log(wrapP("Однажды в студёную зимнюю пору"));
+        // в консоль выводится строка "<P>Однажды в студёную зимнюю пору</P>"
+        console.log(wrapP("Однажды в студёную зимнюю пору", {lang: "ru"}));
+        // в консоль выводится строка "<P lang='ru'>Однажды в студёную зимнюю пору</P>"
+        console.log(wrapP("Однажды в <студёную> зимнюю пору"));
+        // в консоль выводится строка "<P>Однажды в &lt;студёную&gt; зимнюю пору</P>"
+        console.log(wrapH1("СТИХИ", {align: "center", title: "M&M's"}));
+
+        function replaceSpecialSymbols(text) {
+            return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\'', '&apos;');
+        }
+
+        function wrapP(text, attributes) {
+            return wrapInTag("P", text, attributes);
+        }
+
+        function wrapH1(text, attributes) {
+            return wrapInTag("H1", text, attributes);
+        }
+
+        function wrapInTag(tag, text, attributes) {
+
+            console.log(text);
+            let attributesString = attributes === undefined ? "" : mapAttributesToHtmlFormat(attributes, replaceSpecialSymbols);
+
+            text = replaceSpecialSymbols(text);
+
+            return `<${tag}${attributesString}>${text}</${tag}>`;
+        }
+
+        function mapAttributesToHtmlFormat(attributes, replaceSpecialSymbols) {
+            const mappedArray = Object.entries(attributes)
+                .map(([key, value]) => `${key} = "${replaceSpecialSymbols(value)}"`);
+
+            let attributesString = " ";
+            for (let i = 0; i < mappedArray.length; i++) {
+                if (i > 0) {
+                    attributesString += " ";
+                }
+                attributesString += mappedArray[i];
+            }
+            return attributesString;
+        }
+    }
+
+</script>
+
+
+</html>
