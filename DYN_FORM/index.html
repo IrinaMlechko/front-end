@@ -179,6 +179,8 @@
                 const label = document.createElement("label");
                 label.setAttribute("for", formDefinitionElement.name);
                 label.textContent = formDefinitionElement.label;
+                form.appendChild(div);
+                div.appendChild(label);
 
                 for(let i = 0; i < formDefinitionElement.variants.length; i++) {
                     const divForEachInput = document.createElement("div");
@@ -186,14 +188,13 @@
                     input.setAttribute("type", formDefinitionElement.kind);
                     input.setAttribute("name", formDefinitionElement.name);
                     input.setAttribute("value", formDefinitionElement.variants[i].value);
-                    divForEachInput.textContent = formDefinitionElement.variants[i].text;
                     divForEachInput.appendChild(input);
+
+                    const textNode = document.createTextNode(formDefinitionElement.variants[i].text);
+                    divForEachInput.appendChild(textNode);
+
                     div.appendChild(divForEachInput);
                 }
-
-                form.appendChild(div);
-                div.appendChild(label);
-
 
             }
 
