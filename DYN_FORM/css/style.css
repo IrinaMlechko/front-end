@@ -1,3 +1,8 @@
+input[type="button"]{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 form > div {
  margin-bottom: 10px;
 }
@@ -7,7 +12,21 @@ label {
 }
 
 textarea {
-    resize:none;
     width: 100%;
+}
 
+
+
+form div {
+    display: flex;
+    align-items: center;
+}
+
+form div label {
+    flex: 0 0 150px;
+    margin-right: 10px;
+}
+
+.longtext {
+    width: 100%;
 }

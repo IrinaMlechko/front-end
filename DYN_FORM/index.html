@@ -4,7 +4,6 @@
 <head>
     <meta charset=UTF-8>
     <title>Динамические формы</title>
-    <!--    <script src='js/ObjStorageClass.js' type='text/javascript'></script>-->
     <link href='css/style.css' rel='stylesheet' type='text/css'>
 </head>
 
@@ -195,14 +194,29 @@
 
                     div.appendChild(divForEachInput);
                 }
-
             }
 
+            if(formDefinitionElement.kind === "dropdown") {
+                const label = document.createElement("label");
+                label.setAttribute("for", formDefinitionElement.name);
+                label.textContent = formDefinitionElement.label;
+                const select = document.createElement("select");
+
+                for(let i = 0; i < formDefinitionElement.variants.length; i++) {
+                    const option = document.createElement("option");
+                    option.setAttribute("value", formDefinitionElement.variants[i].value);
+                    option.textContent = formDefinitionElement.variants[i].text;
+                    select.appendChild(option);
+                }
+
+                form.appendChild(div);
+                div.appendChild(label);
+                div.appendChild(select);
+
+            }
         }
         return form;
     }
-
-
 </script>
 
 </html>
