@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Динамические формы</title>
+    <!--    <script src='js/ObjStorageClass.js' type='text/javascript'></script>-->
+    <link href='css/style.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+
+<input onclick='generateFirstForm()' type='button' value='Сгенерировать первую форму'>
+<br>
+<input onclick='generateSecondForm()' type='button' value='Сгенерировать вторую форму'>
+
+<form action='https://fe.it-academy.by/TestForm.php' id='interactiveForm' method=post>
+
+</form>
+</body>
+
+<script>
+
+    const formDef1 =
+        [
+            {
+                label: 'Название сайта:',
+                kind: 'longtext',
+                name: 'sitename'
+            },
+            {
+                label: 'URL сайта:',
+                kind: 'longtext',
+                name: 'siteurl'
+            },
+            {
+                label: 'Посетителей в сутки:',
+                kind: 'number',
+                name: 'visitors'
+            },
+            {
+                label: 'E-mail для связи:',
+                kind: 'shorttext',
+                name: 'email'
+            },
+            {
+                label: 'Рубрика каталога:',
+                kind: 'dropdown',
+                name: 'division',
+                variants:
+                    [
+                        {text: 'здоровье', value: 1},
+                        {text: 'домашний уют', value: 2},
+                        {text: 'бытовая техника', value: 3}
+                    ]
+            },
+            {
+                label: 'Размещение:',
+                kind: 'radio',
+                name: 'payment',
+                variants:
+                    [
+                        {text: 'бесплатное', value: 1},
+                        {text: 'платное', value: 2},
+                        {text: 'VIP', value: 3}
+                    ]
+            },
+            {
+                label: 'Разрешить отзывы:',
+                kind: 'check',
+                name: 'votes'
+            },
+            {
+                label: 'Описание сайта:',
+                kind: 'memo',
+                name: 'description'
+            },
+            {
+                caption: 'Опубликовать',
+                kind: 'submit'
+            }
+        ];
+
+    const formDef2 =
+        [
+            {
+                label: 'Фамилия:',
+                kind: 'longtext',
+                name: 'lastname'
+            },
+            {
+                label: 'Имя:',
+                kind: 'longtext',
+                name: 'firstname'
+            },
+            {
+                label: 'Отчество:',
+                kind: 'longtext',
+                name: 'secondname'
+            },
+            {
+                label: 'Возраст:',
+                kind: 'number',
+                name: 'age'
+            },
+            {
+                caption: 'Зарегистрироваться',
+                kind: 'submit'
+            },
+        ];
+
+    function generateFirstForm() {
+        const form = document.getElementById('interactiveForm');
+        return createForm(form, formDef1);
+    }
+
+    function generateSecondForm() {
+        const form = document.getElementById('interactiveForm');
+        return createForm(form, formDef2);
+    }
+
+    function createForm(form, formDefinition) {
+        for (let i = 0; i < formDefinition.length; i++) {
+            const div = document.createElement('div');
+            let formDefinitionElement = formDefinition[i];
+            if (formDefinitionElement.kind !== "dropdown" && formDefinitionElement.kind !== "memo" && formDefinitionElement.kind !== "radio") {
+                const input = document.createElement("input");
+                switch (formDefinitionElement.kind) {
+                    case "longtext":
+                    case "shorttext":
+                        input.setAttribute("type", "text");
+                        input.setAttribute("name", formDefinitionElement.name);
+                        input.setAttribute("id", formDefinitionElement.name);
+                        input.className = formDefinitionElement.kind;
+                        break;
+                    case "check":
+                        input.setAttribute("type", "checkbox");
+                        input.setAttribute("name", formDefinitionElement.name);
+                        input.setAttribute("id", formDefinitionElement.name);
+                        input.checked=true;
+                        break;
+                    case "submit":
+                        input.setAttribute("type", formDefinitionElement.kind);
+                        input.setAttribute("value", formDefinitionElement.caption);
+                        break;
+                    default:
+                        input.setAttribute("type", formDefinitionElement.kind);
+                        input.setAttribute("name", formDefinitionElement.name);
+                        input.setAttribute("id", formDefinitionElement.name);
+                }
+
+                if (formDefinitionElement.kind !== "submit") {
+                    const label = document.createElement("label");
+                    label.setAttribute("for", formDefinitionElement.name);
+                    label.textContent = formDefinitionElement.label;
+                    form.appendChild(div);
+                    div.appendChild(label);
+                } else {
+                    form.appendChild(div);
+                }
+                div.appendChild(input);
+            }
+
+            if (formDefinitionElement.kind === "memo") {
+                const label = document.createElement("label");
+                label.setAttribute("for", formDefinitionElement.name);
+                label.textContent = formDefinitionElement.label;
+
+                const textarea = document.createElement("textarea");
+                textarea.setAttribute("id", formDefinitionElement.name);
+                textarea.setAttribute("name", formDefinitionElement.name);
+
+                form.appendChild(div);
+                div.appendChild(label);
+                div.appendChild(textarea);
+            }
+
+            if (formDefinitionElement.kind === "radio") {
+                const label = document.createElement("label");
+                label.setAttribute("for", formDefinitionElement.name);
+                label.textContent = formDefinitionElement.label;
+
+                for(let i = 0; i < formDefinitionElement.variants.length; i++) {
+                    const divForEachInput = document.createElement("div");
+                    const input = document.createElement("input");
+                    input.setAttribute("type", formDefinitionElement.kind);
+                    input.setAttribute("name", formDefinitionElement.name);
+                    input.setAttribute("value", formDefinitionElement.variants[i].value);
+                    divForEachInput.textContent = formDefinitionElement.variants[i].text;
+                    divForEachInput.appendChild(input);
+                    div.appendChild(divForEachInput);
+                }
+
+                form.appendChild(div);
+                div.appendChild(label);
+
+
+            }
+
+        }
+        return form;
+    }
+
+
+</script>
+
+</html>

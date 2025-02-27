@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Напитки</title>
+    <script src='js/ObjStorageFunc.js' type='text/javascript'></script>
+    <link rel='stylesheet' type='text/css' href='css/style.css'>
+</head>
+
+<body>
+
+<input onclick='addDrinkInformation()' type='button' value='Ввод информации о напитке'>
+<br>
+<input onclick='getDrinkInformation()' type='button' value='Получение информации о напитке'>
+<br>
+<input onclick='removeDrinkInformation()' type='button' value='Удаление информации о напитке'>
+<br>
+<input onclick='getAllDrinks()' type='button' value='Перечень всех напитков'>
+</body>
+
+<script>
+
+    let drinkInformation = new ObjStorageFunc();
+
+    function addDrinkInformation() {
+        let name = prompt("Введите название напитка");
+        let info = {};
+        info['алкогольный'] = confirm(`Подтвердите, если напиток ${name} является алкогольным.`) ? "да" : "нет";
+        info['рецепт приготовления'] = prompt(`Введите рецепт напитка ${name}`);
+        drinkInformation.addValue(name, info);
+    }
+
+    function getDrinkInformation() {
+        let name = prompt("Введите название напитка");
+        let infoObject = drinkInformation.getValue(name);
+        if (infoObject) {
+            alert(`название: ${name}\n` +
+                Object.entries(infoObject)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join('\n'));
+        } else {
+            alert("Не найдено информации о напитке " + name);
+        }
+    }
+
+    function removeDrinkInformation() {
+        let name = prompt("Введите название напитка");
+        let isRemoved = drinkInformation.deleteValue(name);
+        alert(isRemoved ? `Напиток ${name} удален` : `Напиток ${name} не найден!`);
+    }
+
+    function getAllDrinks() {
+        let names = drinkInformation.getKeys();
+        if (names.length === 0) {
+            alert("Пока нет никаких напитков...")
+        } else {
+            alert("Список напитков: " + names);
+        }
+
+    }
+
+</script>
+
+</html>

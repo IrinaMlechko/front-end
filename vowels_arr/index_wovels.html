@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Подсчет количества русских гласных букв</title>
+    <script src='js/vowels.js' type='text/javascript'></script>
+</head>
+
+<body>
+
+<input onclick='checkString()' type='button' value='Введите строку'>
+</body>
+<script>
+    function checkString() {
+        let testString = prompt('Введите строку');
+
+        // alert(`Количество русских гласных букв в строке "${testString}": ${countVowels(testString)}`);
+        alert(`Количество русских гласных букв в строке с помощью forEach"${testString}": ${countVowelsForEach(testString)}`);
+        alert(`Количество русских гласных букв в строке с помощью filer"${testString}": ${countVowelsFilter(testString)}`);
+        alert(`Количество русских гласных букв в строке с помощью reduce"${testString}": ${countVowelsReduce(testString)}`);
+
+        // //tests
+        // let string = "ффАаОон";
+        // console.log(string + " " + countVowels(string));
+        // console.log(string + " " + countVowelsForEach(string));
+        // console.log(string + " " + countVowelsFilter(string));
+        // console.log(string + " " + countVowelsReduce(string));
+        //
+        // string = "";
+        // console.log(string + " " + countVowels(string));
+        // console.log(string + " " + countVowelsForEach(string));
+        // console.log(string + " " + countVowelsFilter(string));
+        // console.log(string + " " + countVowelsReduce(string));
+        //
+        // string = "a";
+        // console.log(string + " " + countVowels(string));
+        // console.log(string + " " + countVowelsForEach(string));
+        // console.log(string + " " + countVowelsFilter(string));
+        // console.log(string + " " + countVowelsReduce(string));
+        //
+        // string = "о";
+        // console.log(string + " " + countVowels(string));
+        // console.log(string + " " + countVowelsForEach(string));
+        // console.log(string + " " + countVowelsFilter(string));
+        // console.log(string + " " + countVowelsReduce(string));
+
+    }
+
+
+</script>
+
+
+</html>
