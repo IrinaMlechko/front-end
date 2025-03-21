@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=UTF-8>
+    <title>Публикация</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<form action='http://fe.it-academy.by/TestForm.php' method=post name='INFO' novalidate>
+    <div class='Header'>
+        Для внесения вашего сайта в каталог, заполните форму:
+    </div>
+
+    <div class='Main'>
+        <div>
+            <label for="developers">Разработчики:</label>
+            <div class="long-text input-text">
+                <input id="developers" name="Developers" type="text">
+            </div>
+            <div class="error-message"></div>
+        </div>
+        <div>
+            <label for="websiteName">Название сайта:</label>
+            <div class="long-text input-text">
+                <input id="websiteName" name="Name" type="text">
+            </div>
+            <div class="error-message"></div>
+        </div>
+        <div>
+            <label for="url">URL статьи:</label>
+            <div class="middle-text input-text">
+                <input id="url" name="Url" type="text">
+            </div>
+            <div class="error-message"></div>
+        </div>
+        <div>
+            <label for="date">Дата запуска сайта:</label>
+            <div class="short-text input-text">
+                <input id="date" name="Date" type="date">
+            </div>
+            <div class="error-message"></div>
+        </div>
+        <div>
+            <label for="visitors">Посетителей в сутки:</label>
+            <div class="short-text input-text">
+                <input id="visitors" name="Visitors" type="number">
+            </div>
+            <div class="error-message"></div>
+        </div>
+        <div>
+            <label for="mail">E-mail для связи:</label>
+            <div class="middle-text input-text">
+                <input id="mail" name="Mail" type="email">
+            </div>
+            <div class="error-message"></div>
+        </div>
+
+        <div>
+            <label for="kinds">Рубрика каталога:</label>
+            <div class="input-text">
+                <select id="kinds" name="Kind">
+                    <option value="">Выберите рубрику</option>
+                    <option value="1">бытовая техника</option>
+                    <option value="2">электроника</option>
+                    <option value="3">стройка и ремонт</option>
+                    <option value="4">дом и сад</option>
+                </select>
+            </div>
+            <div class="error-message"></div>
+        </div>
+
+        <div>
+            <label>Публикация:</label>
+            <div class="Answer-container input-text">
+                <div class="Answer"><input name='answer' type='radio' value=1>бесплатное</div>
+                <div class="Answer"><input name='answer' type='radio' value=2>платное</div>
+                <div class="Answer"><input name='answer' type='radio' value=3>VIP</div>
+                <input name='selectnumber' type='hidden' value=1>
+            </div>
+            <div class="error-message"></div>
+        </div>
+
+        <div>
+            <label for="allowComments">Разрешить отзывы:</label>
+            <div class="input-text">
+                <input id="allowComments" name="allowComments" type="checkbox">
+            </div>
+            <div class="error-message"></div>
+        </div>
+        <div>
+            <label for="description">Описание сайта:</label>
+            <div class="input-text">
+                <textarea id="description" name="description"></textarea><br>
+            </div>
+            <div class="error-message"></div>
+        </div>
+    </div>
+
+
+    <div class='Submit'>
+        <input type="submit" value="Опубликовать">
+    </div>
+
+</form>
+</body>
+<script>
+
+    let form = document.forms.INFO;
+    form.addEventListener('submit', validateForm, false);
+
+    let developersField = form.elements.Developers;
+    developersField.addEventListener('blur', validateDevelopersField, false);
+
+    let websiteNameField = form.elements.Name;
+    websiteNameField.addEventListener('blur', validateWebsiteNameField, false);
+
+    let urlField = form.elements.Url;
+    urlField.addEventListener('blur', validateUrlField, false);
+
+    let dateField = form.elements.Date;
+    dateField.addEventListener('blur', validateDateField, false);
+
+    let visitorsField = form.elements.Visitors;
+    visitorsField.addEventListener('blur', validateVisitorsField, false);
+
+    let mailField = form.elements.Mail;
+    mailField.addEventListener('blur', validateMailField, false);
+
+    let kindsField = form.elements.Kind;
+    kindsField.addEventListener('change', validateKindField, false);
+
+    let publicationFields = form.elements.answer;
+    for (let publicationField of publicationFields) {
+        publicationField.addEventListener('change', validatePublicationFields, false);
+    }
+
+    let allowCommentsField = form.elements.allowComments;
+    allowCommentsField.addEventListener("blur", validateAllowCommentsField);
+
+    let descriptionField = form.elements.description;
+    descriptionField.addEventListener("blur", validateDescriptionField);
+
+    //поле "Разработчики" должно содержать минимум 5, максимум 20 символов
+    function validateDevelopersField() {
+        let developersFieldValue = developersField.value.trim();
+        let errorMessage = developersField.parentElement.parentElement.querySelector(".error-message");
+        if (developersFieldValue.length < 5 || developersFieldValue.length > 20) {
+            errorMessage.innerHTML = "Введите не менее 5, но не более 20 символов!"
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //название сайта должно содержать не менее 3 символов
+    function validateWebsiteNameField() {
+        let websiteNameFieldValue = websiteNameField.value.trim();
+        let errorMessage = websiteNameField.parentElement.parentElement.querySelector(".error-message");
+        if (websiteNameFieldValue.length < 3) {
+            errorMessage.innerHTML = "Введите не менее 3 символов!"
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //URL должен иметь специальный вид:
+    //Можно вводить с http:// или https://, но необязательно.
+    //Должен быть заполнен домен.
+    //Доменная зона должна содержать минимум 2 буквы.
+    //Можно добавить путь после /.
+    //Пробелы и специальные символы не допускаются.
+    function validateUrlField() {
+        let urlFieldValue = urlField.value.trim();
+        let errorMessage = urlField.parentElement.parentElement.querySelector(".error-message");
+
+        let urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})(\/\S*)?$/;
+
+        if (!urlPattern.test(urlFieldValue)) {
+            errorMessage.innerHTML = "Введите корректный URL!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //дата не может быть в прошлом
+    function validateDateField() {
+        let dateFieldValue = dateField.value;
+        let errorMessage = dateField.parentElement.parentElement.querySelector(".error-message");
+
+        let today = new Date();
+        let todayString = today.toISOString().split('T')[0];
+
+        if (dateFieldValue < todayString) {
+            errorMessage.innerHTML = "Дата должна быть не раньше сегодняшнего дня!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //число посетителей в сутки должно быть положительным
+    function validateVisitorsField() {
+        let visitorsFieldValue = visitorsField.value.trim();
+        let errorMessage = visitorsField.parentElement.parentElement.querySelector(".error-message");
+
+        let amountOfVisitors = parseInt(visitorsFieldValue);
+
+        if (isNaN(amountOfVisitors)) {
+            errorMessage.innerHTML = "Введите корректное число!";
+        } else if (amountOfVisitors < 1) {
+            errorMessage.innerHTML = "Количество посетителей не может быть меньше 1!";
+            return false;
+        } else if (amountOfVisitors > 100000) {
+            errorMessage.innerHTML = "Количество посетителей не может превышать 100000!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //Адрес электронной почты должен иметь специальный вид:
+    //Должна быть задано имя, состоящее из латинских букв, цифр и символов ., _, -.
+    //Должен быть символ @.
+    //Должно быть доменное имя.
+    //В доменном имени разрешены буквы, цифры, точки и дефисы.
+    //Доменная зона должна содержать минимум 2 буквы.
+    function validateMailField() {
+        let mailFieldValue = mailField.value.trim();
+        let errorMessage = mailField.parentElement.parentElement.querySelector(".error-message");
+
+        let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailPattern.test(mailFieldValue)) {
+            errorMessage.innerHTML = "Введите корректный адрес электронной почты!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //рубрика должна быть выбрана
+    function validateKindField() {
+        let kindFieldValue = kindsField.value;
+        let errorMessage = kindsField.parentElement.parentElement.querySelector(".error-message");
+
+        if (kindFieldValue === "" || kindFieldValue === "0") {
+            errorMessage.innerHTML = "Пожалуйста, выберите рубрику!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //должен быть выбран тип публикации, отличный от VIP
+    function validatePublicationFields() {
+        let isSelected = false;
+        let isVipSelected = false;
+        let errorMessage = document.querySelector(".Answer-container").parentElement.querySelector(".error-message");
+
+        for (let publicationField of publicationFields) {
+            if (publicationField.checked) {
+                isSelected = true;
+                if (publicationField.value === "3") {
+                    isVipSelected = true;
+                }
+            }
+        }
+
+        if (!isSelected) {
+            errorMessage.innerHTML = "Пожалуйста, выберите вариант публикации!";
+            return false;
+        } else if (isVipSelected) {
+            errorMessage.innerHTML = "Выбор VIP-публикации недоступен для вашего тарифа!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //отзывы должны быть разрешены
+    function validateAllowCommentsField() {
+        let errorMessage = allowCommentsField.parentElement.parentElement.querySelector(".error-message");
+
+        if (!allowCommentsField.checked) {
+            errorMessage.innerHTML = "Вы должны разрешить отзывы!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    //описание сайта должно содержать не менее 50 символов
+    function validateDescriptionField() {
+        let descriptionValue = descriptionField.value.trim();
+        let errorMessage = descriptionField.parentElement.parentElement.querySelector(".error-message");
+
+        if (descriptionValue.length < 50) {
+            errorMessage.innerHTML = "Описание должно содержать не менее 50 символов!";
+            return false;
+        } else {
+            errorMessage.innerHTML = "";
+            return true;
+        }
+    }
+
+    function validateForm(eo) {
+        eo = eo || window.event;
+        let invalidFieldFound = false;
+        let firstInvalidField = null;
+
+        try {
+            if (!validateDevelopersField()) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("developers");
+            }
+            if (!validateWebsiteNameField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("websiteName");
+            }
+            if (!validateUrlField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("url");
+            }
+            if (!validateDateField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("date");
+            }
+            if (!validateVisitorsField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("visitors");
+            }
+            if (!validateMailField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("mail");
+            }
+            if (!validateKindField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("kinds");
+            }
+            if (!validatePublicationFields() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.querySelector("input[name='answer']");
+            }
+            if (!validateAllowCommentsField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("allowComments");
+            }
+            if (!validateDescriptionField() && !invalidFieldFound) {
+                invalidFieldFound = true;
+                firstInvalidField = document.getElementById("description");
+            }
+
+            if (invalidFieldFound) {
+                firstInvalidField.focus();
+                eo.preventDefault();
+            }
+        } catch (ex) {
+            console.log(ex);
+            alert('Неожиданный сбой при обработке формы. Пожалуйста, проверьте введенные данные или свяжитесь с администратором');
+            eo.preventDefault();
+        }
+    }
+
+</script>
+
+</html>

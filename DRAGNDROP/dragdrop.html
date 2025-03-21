@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=UTF-8>
+    <title>drag&amp;drop</title>
+</head>
+<body style='min-height: 100vh'>
+<img src='http://fe.it-academy.by/Sites/0000007/sax.jpg'>
+<img src='http://fe.it-academy.by/Sites/0000007/Yin_and_Yang.png' style='vertical-align: 20px' width=100>
+<img src='http://fe.it-academy.by/Sites/0000007/Man-and-woman.png' width=150>
+<img src='http://fe.it-academy.by/Sites/0000007/No_smoking.png' style='padding-left: 50px'>
+
+<script>
+
+    window.addEventListener('load', makeAllElementsFix, false);
+
+    function makeAllElementsFix() {
+        const images = document.getElementsByTagName("img");
+        for (let i = 0; i < images.length; i++) {
+            const image = images[i];
+            const position = getElementPosition(image);
+            image.style.left = position.left + "px";
+            image.style.top = position.top + "px";
+            console.log(position.left + " " + position.top);
+        }
+
+        for (let i = 0; i < images.length; i++) {
+            const image = images[i];
+            let position = getElementPosition(image);
+            console.log(position.left + " " + position.top);
+
+            image.style.position = "absolute";
+
+            position = getElementPosition(image);
+            console.log(position.left + " " + position.top);
+
+        }
+    }
+
+    function getElementPosition(element) {
+        const bbox = element.getBoundingClientRect();
+        return {
+            left: bbox.left + window.pageXOffset,
+            top: bbox.top + window.pageYOffset,
+        };
+    }
+
+    document.body.addEventListener('mousedown', dragStarted, false);
+    document.body.addEventListener('mouseup', dragEnded, false);
+
+    let draggedImage = null;
+    let touchShiftX = 0;
+    let touchShiftY = 0;
+    let maxZIndex = 0;
+
+    function dragStarted(eo) {
+        document.body.addEventListener('mousemove', imageDragged, false);
+        eo = eo || window.event;
+        eo.preventDefault();
+        draggedImage = eo.target;
+        maxZIndex++;
+        draggedImage.style.zIndex = maxZIndex.toString();
+        document.body.style.cursor = 'pointer';
+
+        const position = getElementPosition(draggedImage);
+        touchShiftX = eo.clientX - position.left;
+        touchShiftY = eo.clientY - position.top;
+    }
+
+    function dragEnded(eo) {
+        document.body.removeEventListener('mousemove', imageDragged, false);
+        eo = eo || window.event;
+        eo.preventDefault();
+        draggedImage = null;
+        document.body.style.cursor = 'default';
+    }
+
+    function imageDragged(eo) {
+        eo = eo || window.event;
+        eo.preventDefault();
+        if (draggedImage) {
+            draggedImage.style.left = eo.clientX - touchShiftX + "px";
+            draggedImage.style.top = eo.clientY - touchShiftY + "px";
+        }
+    }
+</script>
+
+</body>
+</html>

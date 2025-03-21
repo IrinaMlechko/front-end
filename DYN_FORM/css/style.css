@@ -15,8 +15,6 @@ textarea {
     width: 100%;
 }
 
-
-
 form div {
     display: flex;
     align-items: center;
@@ -27,6 +25,6 @@ form div label {
     margin-right: 10px;
 }
 
-.longtext {
+.long-text {
     width: 100%;
 }

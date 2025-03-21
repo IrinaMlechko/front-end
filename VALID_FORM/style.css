@@ -1,0 +1,51 @@
+input[type="button"]{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Main > div {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.Header {
+    margin-bottom: 10px;
+}
+
+.Main div label {
+    flex: 0 0 150px;
+    margin-right: 10px;
+}
+
+.input-text {
+    flex-grow: 7;
+}
+
+
+.long-text input[type="text"], textarea {
+    width: 70%;
+}
+
+input[type="email"] {
+    width: 40%;
+}
+
+.Answer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.Answer {
+    width: auto;
+}
+
+.error-message{
+    color: red;
+    font-size: 14px;
+    min-width: 150px; /* Фиксированное место для ошибок */
+    white-space: nowrap; /* Не переносить текст ошибки */
+    /*flex-grow: 3;*/
+}
