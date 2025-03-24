@@ -138,7 +138,7 @@
     }
 
     let allowCommentsField = form.elements.allowComments;
-    allowCommentsField.addEventListener("blur", validateAllowCommentsField);
+    allowCommentsField.addEventListener("change", validateAllowCommentsField);
 
     let descriptionField = form.elements.description;
     descriptionField.addEventListener("blur", validateDescriptionField);
