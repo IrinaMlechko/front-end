@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href='style.css' rel='stylesheet' type='text/css'>
+    <title>Часики</title>
+</head>
+<body>
+<div id='Input'>
+    <div>
+        Введите диаметр часов в пикселях:
+    </div>
+
+    <input id="diameter" max="800" min="200" type="number" value="200">
+    <input onclick='createClock()' type='button' value='Построить часы'>
+</div>
+
+<div class="circle" id="circle">
+    <div class="little-circle" id="0">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="1">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="2">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="3">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="4">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="5">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="6">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="7">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="8">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="9">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="10">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="11">
+        <div class="time"></div>
+    </div>
+</div>
+
+<script>
+    const offsetTop = 5;
+    const degreeForOneRotate = 360 / 12;
+
+    function createClock() {
+        const diameterOfClock = document.getElementById('diameter').value;
+        const diameterOfLittleCircle = diameterOfClock / 10;
+        const offsetLeft = (diameterOfClock - diameterOfLittleCircle) / 2;
+        let clock = document.getElementById("circle");
+        clock.style.width = `${diameterOfClock}px`;
+        clock.style.height = `${diameterOfClock}px`;
+        hideInput();
+        let allLittleCircles = document.querySelectorAll(".little-circle");
+        let counterDegree = 0;
+        for (let i = 0; i < allLittleCircles.length; i++) {
+            allLittleCircles[i].style.width = `${diameterOfLittleCircle}px`;
+            allLittleCircles[i].style.height = `${diameterOfLittleCircle}px`;
+            allLittleCircles[i].style.left = `${offsetLeft}px`;
+            allLittleCircles[i].style.transformOrigin = `50% ${diameterOfClock / 2 - offsetTop}px`;
+            allLittleCircles[i].style.transform = `rotate(${counterDegree}deg)`;
+            let timeElement = allLittleCircles[i].querySelector(".time");
+            timeElement.innerHTML = i.toString();
+            timeElement.style.top = `50%`;
+            timeElement.style.left = `50%`;
+            timeElement.style.transform = `translate(-50%, -50%) rotate(-${counterDegree}deg)`;
+            counterDegree = counterDegree + degreeForOneRotate;
+
+        }
+
+    }
+
+    function hideInput() {
+        let input = document.getElementById('Input');
+        input.style.display = 'none';
+    }
+</script>
+</body>
+</html>

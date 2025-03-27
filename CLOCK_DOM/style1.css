@@ -1,0 +1,125 @@
+
+
+.circle {
+    width: 300px;  /* Диаметр круга */
+    height: 300px; /* Диаметр круга */
+    background-color: yellow; /* Цвет круга */
+    border-radius: 50%; /* Делает форму круглой */
+    position: relative;
+}
+
+.little-circle {
+    width: 30px;  /* Диаметр круга */
+    height: 30px; /* Диаметр круга */
+    background-color: green; /* Цвет круга */
+    border-radius: 50%; /* Делает форму круглой */
+    position: absolute;
+    top: 5px;
+    left: 135px;
+    transform-origin: 50% 145px;
+}
+
+.little-circle-1 {
+    transform: rotate(30deg);
+}
+
+.little-circle-2 {
+    transform: rotate(60deg);
+}
+
+.little-circle-3 {
+    transform: rotate(90deg);
+}
+
+.little-circle-4 {
+    transform: rotate(120deg);
+}
+
+.little-circle-5 {
+    transform: rotate(150deg);
+}
+
+.little-circle-6 {
+    transform: rotate(180deg);
+}
+
+.little-circle-7 {
+    transform: rotate(210deg);
+}
+
+.little-circle-8 {
+    transform: rotate(240deg);
+}
+
+.little-circle-9 {
+    transform: rotate(270deg);
+}
+
+.little-circle-10 {
+    transform: rotate(300deg);
+}
+
+.little-circle-11 {
+    transform: rotate(330deg);
+}
+
+.little-circle {
+    width: 30px;  /* Диаметр маленького круга */
+    height: 30px;
+    background-color: green;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 135px;
+    transform-origin: 50% 145px; /* Вращение относительно центра большого круга */
+}
+
+.little-circle-1 {
+    transform: rotate(30deg);
+}
+
+.time {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg); /* Центрирование + обратное вращение */
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+
+.line {
+    position: absolute;
+    background-color: black;
+}
+
+/* Горизонтальная линия */
+.horizontal {
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+/* Вертикальная линия */
+.vertical {
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Центр */
+.center-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

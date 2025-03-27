@@ -1,0 +1,26 @@
+input {
+    margin-top: 20px;
+}
+
+.circle {
+    background-color: yellow;
+    border-radius: 50%;
+    position: relative;
+}
+
+.little-circle {
+    background-color: green;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+}
+
+.time {
+    position: absolute;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%) rotate(-30deg); !* Центрирование + обратное вращение *!*/
+    /*font-size: 16px;*/
+    font-weight: bold;
+    color: white;
+}
