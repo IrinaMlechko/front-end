@@ -184,20 +184,20 @@
     background-color: black;
 }
 
-.HourHand {
+#HourHand {
     width: 6px;
     height: 60px;
     z-index: 1;
 }
 
 
-.MinuteHand {
+#MinuteHand {
     width: 4px;
     height: 80px;
     z-index: 2;
 }
 
-.SecondHand {
+#SecondHand {
     width: 2px;
     height: 100px;
     z-index: 3;

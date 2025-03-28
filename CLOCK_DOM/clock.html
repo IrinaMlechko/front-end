@@ -17,9 +17,9 @@
 
 <div class="circle" id="circle">
     <div id="currentTime"></div>
-    <div class="HourHand"></div>
-    <div class="MinuteHand"></div>
-    <div class="SecondHand"></div>
+    <div class="Hand" id = "HourHand"></div>
+    <div class="Hand" id = "MinuteHand"></div>
+    <div class="Hand" id = "SecondHand"></div>
     <div class="little-circle" id="0">
         <div class="time"></div>
     </div>
@@ -61,20 +61,16 @@
 <script>
     const offsetTop = 5;
     const degreeForOneRotate = 360 / 12;
+    const amountOfMinutesInHour = 60;
 
     function createClock() {
-
-        setInterval(updateTime,1000);
-
-        function updateTime() {
-            const currTime=new Date();
-            console.log(currTime);
-            document.getElementById('currentTime').innerHTML=formatDateTime(currTime);
-        }
-
         const diameterOfClock = document.getElementById('diameter').value;
         const diameterOfLittleCircle = diameterOfClock / 10;
         const offsetLeft = (diameterOfClock - diameterOfLittleCircle) / 2;
+        const handPositionLeft = diameterOfClock/2;
+        const handPositionTop = diameterOfClock/2;
+
+        updateTime();
         let clock = document.getElementById("circle");
         clock.style.width = `${diameterOfClock}px`;
         clock.style.height = `${diameterOfClock}px`;
@@ -96,6 +92,34 @@
 
         }
 
+        setInterval(updateTime,1000);
+
+        function updateTime() {
+            const currTime=new Date();
+            console.log(currTime);
+            document.getElementById('currentTime').innerHTML=formatDateTime(currTime);
+            setHandsPositions(currTime);
+        }
+        function setHandsPositions(currTime) {
+            let hands = document.querySelectorAll(".Hand");
+            hands.forEach((hand) => {
+                hand.style.top = `${handPositionTop}px`;
+                hand.style.left = `${handPositionLeft}px`;
+            });
+
+            let hourHand = document.getElementById("HourHand");
+            let degreeForHourHand = (currTime.getHours() % 12 + currTime.getMinutes() / 60) * 30;
+            hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degreeForHourHand}deg)`;
+
+            let minuteHand = document.getElementById("MinuteHand");
+            let degreeForMinuteHand = currTime.getMinutes() * 6;
+            minuteHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degreeForMinuteHand}deg)`;
+
+            let secondHand = document.getElementById("SecondHand");
+            let degreeForSecondHand = currTime.getSeconds() * 6;
+            secondHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degreeForSecondHand}deg)`;
+
+        }
 
         function formatDateTime(dt) {
             const hours=dt.getHours();

@@ -24,3 +24,29 @@ input {
     font-weight: bold;
     color: white;
 }
+
+.Hand {
+    position: absolute;
+    transform: translateX(-50%) translateY(-100%) rotate(0deg);
+    transform-origin: left bottom;
+    border-radius: 5px;
+    background-color: black;
+}
+
+#HourHand {
+    width: 6px;
+    height: 60px;
+    z-index: 1;
+}
+
+#MinuteHand {
+    width: 4px;
+    height: 80px;
+    z-index: 2;
+}
+
+#SecondHand {
+    width: 2px;
+    height: 100px;
+    z-index: 3;
+}
