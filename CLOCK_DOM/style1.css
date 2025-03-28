@@ -124,15 +124,6 @@
     transform: translate(-50%, -50%);
 }
 
-.HourHand {
-    position: absolute;
-    top: 5px;
-    height: 75px;
-    width: 5px;
-    border-radius: 50%;
-    background-color: black;
-}
-
 .circle {
     width: 300px;
     height: 300px;
@@ -144,45 +135,16 @@
     justify-content: center;
 }
 
-.HourHand, .MinuteHand, .SecondHand {
-    position: absolute;
-    background-color: black;
-    transform-origin: bottom;
-}
-
-/*.HourHand {*/
-/*    height: 6px;*/
-/*    width: 80px;*/
-/*    background-color: black;*/
-/*    z-index: 1;*/
-/*    left: 150px;*/
-/*    top: 150px;*/
-/*    transform: translateY(-50%) rotate(-90deg);*/
-/*}*/
-
-/*.MinuteHand {*/
-/*    width: 4px;*/
-/*    height: 100px;*/
-/*    background-color: blue;*/
-/*    z-index: 2;*/
-/*}*/
-
-/*.SecondHand {*/
-/*    width: 2px;*/
-/*    height: 120px;*/
-/*    background-color: red;*/
-/*    z-index: 3;*/
-/*}*/
-
 .Hand {
     position: absolute;
-    left: 150px;
-    top: 150px;
-    transform: translateX(-50%) translateY(-100%) rotate(0deg);
-    transform-origin: center top;
+    bottom: 50%;
+    left: 50%;
+    transform: rotate(0deg);
+    transform-origin: center bottom;
     border-radius: 5px;
     background-color: black;
 }
+
 
 #HourHand {
     width: 6px;

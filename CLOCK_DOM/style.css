@@ -17,36 +17,35 @@ input {
 
 .time {
     position: absolute;
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*transform: translate(-50%, -50%) rotate(-30deg); !* Центрирование + обратное вращение *!*/
-    /*font-size: 16px;*/
     font-weight: bold;
     color: white;
 }
 
 .Hand {
     position: absolute;
-    transform: translateX(-50%) translateY(-100%) rotate(0deg);
-    transform-origin: left bottom;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: center bottom;
     border-radius: 5px;
     background-color: black;
+    display: none;
 }
 
 #HourHand {
     width: 6px;
-    height: 60px;
     z-index: 1;
 }
 
 #MinuteHand {
     width: 4px;
-    height: 80px;
     z-index: 2;
 }
 
 #SecondHand {
     width: 2px;
-    height: 100px;
     z-index: 3;
+}
+
+#currentTime {
+    position: absolute;
 }
