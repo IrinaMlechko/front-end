@@ -32,17 +32,14 @@ input {
 }
 
 #HourHand {
-    width: 6px;
     z-index: 1;
 }
 
 #MinuteHand {
-    width: 4px;
     z-index: 2;
 }
 
 #SecondHand {
-    width: 2px;
     z-index: 3;
 }
 
