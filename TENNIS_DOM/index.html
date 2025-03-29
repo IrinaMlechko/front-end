@@ -84,24 +84,29 @@
         ball.update();
 
         leftRacket.posY += leftRacket.speedY;
-        if (leftRacket.posY < 0 && leftRacket.speedY > 0) {
+        if (leftRacket.posY < 0 && leftRacket.speedY !== 0) {
             leftRacket.posY = 0;
+            leftRacket.speedY = 0;
         }
 
         if (leftRacket.posY + leftRacket.height > area.height) {
             leftRacket.posY = area.height - leftRacket.height;
+            leftRacket.speedY = 0;
+
         }
 
         leftRacket.update();
 
         rightRacket.posY += rightRacket.speedY;
 
-        if (rightRacket.posY < 0 && rightRacket.speedY > 0) {
+        if (rightRacket.posY < 0 && rightRacket.speedY !== 0) {
             rightRacket.posY = 0;
+            rightRacket.speedY = 0;
         }
 
         if (rightRacket.posY + rightRacket.height > area.height) {
             rightRacket.posY = area.height - rightRacket.height;
+            rightRacket.speedY = 0;
         }
 
         rightRacket.update();
@@ -109,20 +114,18 @@
 
     document.body.addEventListener('keydown', function(event) {
         if (event.key === "Shift") {
-            console.log("Нажата клавиша Shift");
-            leftRacket.speedY = -1;
+            leftRacket.speedY = -3;
         } else if (event.key === "Control") {
-            leftRacket.speedY = 1;
+            leftRacket.speedY = 3;
         } else if (event.key === "ArrowUp") {
-            rightRacket.speedY = -1;
+            rightRacket.speedY = -3;
         } else if (event.key === "ArrowDown") {
-            rightRacket.speedY = 1;
+            rightRacket.speedY = 3;
         }
     }, false);
 
     document.body.addEventListener('keyup', function(event) {
         if (event.key === "Shift") {
-            console.log("Нажата клавиша Shift");
             leftRacket.speedY = 0;
         } else if (event.key === "Control") {
             leftRacket.speedY = 0;
