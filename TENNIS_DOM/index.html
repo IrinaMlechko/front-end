@@ -19,7 +19,8 @@
 
         posX: 325,
         posY: 225,
-        speedX: 3,
+        speedX: 5,
+        speedY : 1,
         width: 50,
         height: 50,
 
@@ -75,12 +76,27 @@
         if (ball.posX + ball.width > area.width - 15) {
             ball.speedX = -ball.speedX;
             ball.posX = area.width - 15 - ball.width;
+            ball.speedY = Math.floor(Math.random() * 7) - 3;
         }
         // вылетел ли мяч левее стены?
         if (ball.posX < 15) {
             ball.speedX = -ball.speedX;
             ball.posX = 15;
+            ball.speedY = Math.floor(Math.random() * 7) - 3;
         }
+
+        ball.posY += ball.speedY;
+        if ( ball.posY+ball.height>area.height ) {
+            ball.speedY=-ball.speedY;
+            ball.posY=area.height-ball.height;
+
+        }
+
+        if ( ball.posY<=0 ) {
+            ball.speedY=-ball.speedY;
+            ball.posY=0;
+        }
+
         ball.update();
 
         leftRacket.posY += leftRacket.speedY;
