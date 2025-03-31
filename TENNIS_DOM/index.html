@@ -46,7 +46,7 @@
 
     let rightRacket = {
         posX: 685,
-        posY: 480,
+        posY: 330,
         speedY: 0,
         width: 15,
         height: 150,
@@ -112,7 +112,7 @@
         rightRacket.update();
     }
 
-    document.body.addEventListener('keydown', function(event) {
+    document.body.addEventListener('keydown', function (event) {
         if (event.key === "Shift") {
             leftRacket.speedY = -3;
         } else if (event.key === "Control") {
@@ -124,7 +124,7 @@
         }
     }, false);
 
-    document.body.addEventListener('keyup', function(event) {
+    document.body.addEventListener('keyup', function (event) {
         if (event.key === "Shift") {
             leftRacket.speedY = 0;
         } else if (event.key === "Control") {
