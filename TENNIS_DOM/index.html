@@ -106,11 +106,6 @@
     }
 
     function tick() {
-        if (!gameStarted) {
-            console.log("Игра еще не запущена")
-            return;
-        }
-
         ball.posX += ball.speedX;
         let ballBottom = ball.posY + ball.height;
         let ballTop = ball.posY;
@@ -198,7 +193,7 @@
     function resetBall() {
         ball.posX = area.width / 2 - ball.width / 2;
         ball.posY = area.height / 2 - ball.height / 2;
-        ball.speedX = Math.random() > 0.5 ? 5 : -5;  // Мяч будет лететь влево или вправо
+        ball.speedX = Math.random() > 0.5 ? 5 : -5;
         ball.speedY = Math.floor(Math.random() * 7) - 3;  // Случайная скорость по вертикали (от -3 до 3)
         ball.update();
     }
