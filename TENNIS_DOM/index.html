@@ -6,8 +6,10 @@
     <title>Теннис</title>
 </head>
 <body>
-<input onclick='start()' type='button' value='старт!'>
-<span>3:2</span>
+<div id="top">
+    <input id="startButton" onclick='start()' type='button' value='старт!'>
+    <span id="score"><span id="scoreLeft">0</span>:<span id="scoreRight">0</span></span>
+</div>
 <div id="playField">
     <div id="ball"></div>
     <div id="leftRacket"></div>
@@ -15,12 +17,36 @@
 </div>
 </body>
 <script>
+
+    let gameStarted = false;
+    let score = {
+        left: 0,
+        right: 0,
+
+        updateLeft() {
+            const scoreElemLeft =
+                document.getElementById('scoreLeft');
+            scoreElemLeft.innerHTML = this.left;
+        },
+
+        updateRight() {
+            const scoreElemRight =
+                document.getElementById('scoreRight');
+            scoreElemRight.innerHTML = this.right;
+        },
+
+        update() {
+            this.updateRight();
+            this.updateLeft();
+        }
+    }
+
     let ball = {
 
         posX: 325,
         posY: 225,
         speedX: 5,
-        speedY : 1,
+        speedY: 1,
         width: 50,
         height: 50,
 
@@ -58,46 +84,87 @@
         }
     }
 
-    const areaElement = document.getElementById('playField');
     const area = {
         width: 700,
         height: 500
     }
 
     function start() {
-        // плавное движение - от 25 кадр/сек,
-        // 1000мс/25к=40мс
-        setInterval(tick, 40);
+        if (!gameStarted) {
+            gameStarted = true;
+            console.log("Запускаю таймер");
+            setInterval(tick, 40);
+        }
+        resetBall();
+    }
+
+    function stopRound() {
+        ball.speedX = 0;
+        ball.speedY = 0;
+        ball.update();
+        score.update();
     }
 
     function tick() {
+        if (!gameStarted) {
+            console.log("Игра еще не запущена")
+            return;
+        }
+
         ball.posX += ball.speedX;
-        // вылетел ли мяч правее стены?
-        if (ball.posX + ball.width > area.width - 15) {
-            ball.speedX = -ball.speedX;
-            ball.posX = area.width - 15 - ball.width;
-            ball.speedY = Math.floor(Math.random() * 7) - 3;
+        let ballBottom = ball.posY + ball.height;
+        let ballTop = ball.posY;
+
+        if (ball.posX + ball.width >= area.width - 15) {
+            let racketTop = rightRacket.posY;
+            let racketBottom = rightRacket.posY + rightRacket.height;
+            if (ballBottom >= racketTop && ballTop <= racketBottom) {
+                ball.speedX = -ball.speedX;
+                ball.posX = area.width - 15 - ball.width;
+                ball.speedY = Math.floor(Math.random() * 7) - 3;
+            } else {
+                if (ball.speedX !== 0) {
+                    ball.posX = area.width - ball.width;
+                    score.left++;
+                    stopRound();
+                }
+            }
+
         }
         // вылетел ли мяч левее стены?
-        if (ball.posX < 15) {
-            ball.speedX = -ball.speedX;
-            ball.posX = 15;
-            ball.speedY = Math.floor(Math.random() * 7) - 3;
+        if (ball.posX <= 15) {
+            let racketTop = leftRacket.posY;
+            let racketBottom = leftRacket.posY + leftRacket.height;
+
+            //поймали?
+            if (ballBottom >= racketTop && ballTop <= racketBottom) {
+                ball.speedX = -ball.speedX;
+                ball.posX = 15;
+                ball.speedY = Math.floor(Math.random() * 7) - 3;
+            } else {
+                if (ball.speedX !== 0) {
+                    ball.posX = 0;
+                    score.right++;
+                    stopRound();
+                }
+            }
+
         }
 
         ball.posY += ball.speedY;
-        if ( ball.posY+ball.height>area.height ) {
-            ball.speedY=-ball.speedY;
-            ball.posY=area.height-ball.height;
+        if (ball.posY + ball.height > area.height) {
+            ball.speedY = -ball.speedY;
+            ball.posY = area.height - ball.height;
 
         }
 
-        if ( ball.posY<=0 ) {
-            ball.speedY=-ball.speedY;
-            ball.posY=0;
+        if (ball.posY <= 0) {
+            ball.speedY = -ball.speedY;
+            ball.posY = 0;
         }
 
         ball.update();
+        score.update();
 
         leftRacket.posY += leftRacket.speedY;
         if (leftRacket.posY < 0 && leftRacket.speedY !== 0) {
@@ -128,6 +195,14 @@
         rightRacket.update();
     }
 
+    function resetBall() {
+        ball.posX = area.width / 2 - ball.width / 2;
+        ball.posY = area.height / 2 - ball.height / 2;
+        ball.speedX = Math.random() > 0.5 ? 5 : -5;  // Мяч будет лететь влево или вправо
+        ball.speedY = Math.floor(Math.random() * 7) - 3;  // Случайная скорость по вертикали (от -3 до 3)
+        ball.update();
+    }
+
     document.body.addEventListener('keydown', function (event) {
         if (event.key === "Shift") {
             leftRacket.speedY = -3;
@@ -153,5 +228,6 @@
     }, false);
 
     ball.update();
+
 </script>
 </html>
