@@ -18,6 +18,8 @@
 </body>
 <script>
 
+    const playField = setUpField();
+
     let gameStarted = false;
     let score = {
         left: 0,
@@ -84,11 +86,6 @@
         }
     }
 
-    const area = {
-        width: 700,
-        height: 500
-    }
-
     function start() {
         if (!gameStarted) {
             gameStarted = true;
@@ -110,16 +107,16 @@
         let ballBottom = ball.posY + ball.height;
         let ballTop = ball.posY;
 
-        if (ball.posX + ball.width >= area.width - 15) {
+        if (ball.posX + ball.width >= playField.width - 15) {
             let racketTop = rightRacket.posY;
             let racketBottom = rightRacket.posY + rightRacket.height;
             if (ballBottom >= racketTop && ballTop <= racketBottom) {
                 ball.speedX = -ball.speedX;
-                ball.posX = area.width - 15 - ball.width;
+                ball.posX = playField.width - 15 - ball.width;
                 ball.speedY = Math.floor(Math.random() * 7) - 3;
             } else {
                 if (ball.speedX !== 0) {
-                    ball.posX = area.width - ball.width;
+                    ball.posX = playField.width - ball.width;
                     score.left++;
                     stopRound();
                 }
@@ -147,9 +144,9 @@
         }
 
         ball.posY += ball.speedY;
-        if (ball.posY + ball.height > area.height) {
+        if (ball.posY + ball.height > playField.height) {
             ball.speedY = -ball.speedY;
-            ball.posY = area.height - ball.height;
+            ball.posY = playField.height - ball.height;
 
         }
 
@@ -167,8 +164,8 @@
             leftRacket.speedY = 0;
         }
 
-        if (leftRacket.posY + leftRacket.height > area.height) {
-            leftRacket.posY = area.height - leftRacket.height;
+        if (leftRacket.posY + leftRacket.height > playField.height) {
+            leftRacket.posY = playField.height - leftRacket.height;
             leftRacket.speedY = 0;
 
         }
@@ -182,8 +179,8 @@
             rightRacket.speedY = 0;
         }
 
-        if (rightRacket.posY + rightRacket.height > area.height) {
-            rightRacket.posY = area.height - rightRacket.height;
+        if (rightRacket.posY + rightRacket.height > playField.height) {
+            rightRacket.posY = playField.height - rightRacket.height;
             rightRacket.speedY = 0;
         }
 
@@ -191,11 +188,23 @@
     }
 
     function resetBall() {
-        ball.posX = area.width / 2 - ball.width / 2;
-        ball.posY = area.height / 2 - ball.height / 2;
+        ball.posX = playField.width / 2 - ball.width / 2;
+        ball.posY = playField.height / 2 - ball.height / 2;
         ball.speedX = Math.random() > 0.5 ? 5 : -5;
         ball.speedY = Math.floor(Math.random() * 7) - 3;  // Случайная скорость по вертикали (от -3 до 3)
         ball.update();
+    }
+
+    function setUpField() {
+        const playField = {
+            width: 700,
+            height: 500
+        }
+
+        let playFieldElem = document.getElementById('playField');
+        playFieldElem.style.width = playField.width + 'px';
+        playFieldElem.style.height = playField.height + 'px';
+        return playField;
     }
 
     document.body.addEventListener('keydown', function (event) {

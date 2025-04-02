@@ -6,6 +6,18 @@
     <title>Часики</title>
 </head>
 <body>
+<svg width=300 height=300 xmlns='http://www.w3.org/2000/svg'>
+    <symbol id=little-circle>
+        <circle cx=150 cy=20 r=15 fill=green />
+<text x="20" y="20">12</text>
+    </symbol>
+
+    <circle cx=150 cy=150 r=150 fill=yellow></circle>
+    <text x="110" y="110" style='font-size: 23px'>12:00:00</text>
+    <use xlink:href='#little-circle' x=0 y=0 />
+    <use xlink:href='#little-circle' x=0 y=0 transform="rotate(30 150 150)" />
+    <use xlink:href='#little-circle' x=0 y=0 transform="rotate(60 150 150)" />
+</svg>
 <div class="circle">
     <div id="currentTime">12:00:00</div>
     <div class="Hand" id="HourHand"></div>

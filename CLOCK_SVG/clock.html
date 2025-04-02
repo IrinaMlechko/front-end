@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href='style.css' rel='stylesheet' type='text/css'>
+    <title>Часики</title>
+</head>
+<body>
+<div id='Input'>
+    <div>
+        Введите диаметр часов в пикселях:
+    </div>
+
+    <input id="diameter" max="800" min="200" type="number" value="200">
+    <input onclick='createClock()' type='button' value='Построить часы'>
+</div>
+
+<div class="circle" id="circle">
+    <div id="currentTime"></div>
+    <div class="Hand" id="HourHand"></div>
+    <div class="Hand" id="MinuteHand"></div>
+    <div class="Hand" id="SecondHand"></div>
+    <div class="little-circle" id="0">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="1">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="2">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="3">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="4">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="5">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="6">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="7">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="8">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="9">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="10">
+        <div class="time"></div>
+    </div>
+    <div class="little-circle" id="11">
+        <div class="time"></div>
+    </div>
+</div>
+
+<script>
+    const offsetTop = 5;
+    const degreeForOneRotate = 360 / 12;
+    const amountOfMinutesInHour = 60;
+
+    function createClock() {
+        const diameterOfClock = document.getElementById('diameter').value;
+        if (diameterOfClock > 800 || diameterOfClock < 200) {
+            alert('Введите диаметр в диапазоне от 200 до 800');
+            return;
+        }
+        const diameterOfLittleCircle = diameterOfClock / 10;
+        const offsetLeft = (diameterOfClock - diameterOfLittleCircle) / 2;
+        const radiusOfClock = diameterOfClock / 2;
+        const handPositionLeft = radiusOfClock;
+        const handPositionTop = radiusOfClock;
+        const heightOfHourHand = radiusOfClock * 0.5;
+        const heightOfMinuteHand = radiusOfClock * 0.6;
+        const heightOfSecondHand = radiusOfClock * 0.7;
+        const widthOfHourHand = radiusOfClock * 0.05;
+        const widthOfMinuteHand = radiusOfClock * 0.04;
+        const widthOfSecondHand = radiusOfClock * 0.02;
+        const textSize = radiusOfClock * 0.15;
+
+        updateTime();
+        let clock = document.getElementById("circle");
+        clock.style.width = `${diameterOfClock}px`;
+        clock.style.height = `${diameterOfClock}px`;
+        hideInput();
+        setUpLittleCircles();
+        setInterval(updateTime, 1000);
+
+        function updateTime() {
+            const currTime = new Date();
+            console.log(currTime);
+            let timeElement = document.getElementById('currentTime');
+            timeElement.style.top = `${radiusOfClock * 0.75}px`;
+            timeElement.style.left = `${radiusOfClock * 0.75}px`;
+            timeElement.style.fontSize = `${textSize}px`;
+            timeElement.innerHTML = formatDateTime(currTime);
+            setHandsPositions(currTime);
+        }
+
+        function setHandsPositions(currTime) {
+            let hands = document.querySelectorAll(".Hand");
+
+            let hourHand = document.getElementById("HourHand");
+            let degreeForHourHand = (currTime.getHours() % 12 + currTime.getMinutes() / amountOfMinutesInHour) * 30;
+            hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degreeForHourHand}deg)`;
+            hourHand.style.height = `${heightOfHourHand}px`;
+            hourHand.style.width = `${widthOfHourHand}px`;
+
+            let minuteHand = document.getElementById("MinuteHand");
+            let degreeForMinuteHand = currTime.getMinutes() * 6;
+            minuteHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degreeForMinuteHand}deg)`;
+            minuteHand.style.height = `${heightOfMinuteHand}px`;
+            minuteHand.style.width = `${widthOfMinuteHand}px`;
+
+            let secondHand = document.getElementById("SecondHand");
+            let degreeForSecondHand = currTime.getSeconds() * 6;
+            secondHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degreeForSecondHand}deg)`;
+            secondHand.style.height = `${heightOfSecondHand}px`;
+            secondHand.style.width = `${widthOfSecondHand}px`;
+
+            hands.forEach((hand) => {
+                hand.style.top = `${handPositionTop}px`;
+                hand.style.left = `${handPositionLeft}px`;
+                hand.style.display = 'block';
+            });
+
+        }
+
+        function formatDateTime(dt) {
+            const hours = dt.getHours();
+            const minutes = dt.getMinutes();
+            const seconds = dt.getSeconds();
+            return str0l(hours, 2) + ':' + str0l(minutes, 2) + ':' + str0l(seconds, 2);
+        }
+
+        function str0l(val, len) {
+            let strVal = val.toString();
+            while (strVal.length < len)
+                strVal = '0' + strVal;
+            return strVal;
+        }
+
+        function setUpLittleCircles() {
+            let allLittleCircles = document.querySelectorAll(".little-circle");
+            let counterDegree = 0;
+            for (let i = 0; i < allLittleCircles.length; i++) {
+                allLittleCircles[i].style.width = `${diameterOfLittleCircle}px`;
+                allLittleCircles[i].style.height = `${diameterOfLittleCircle}px`;
+                allLittleCircles[i].style.left = `${offsetLeft}px`;
+                allLittleCircles[i].style.transformOrigin = `50% ${radiusOfClock - offsetTop}px`;
+                allLittleCircles[i].style.transform = `rotate(${counterDegree}deg)`;
+                let timeElement = allLittleCircles[i].querySelector(".time");
+                timeElement.innerHTML = i !== 0 ? i.toString() : 12;
+                timeElement.style.top = `50%`;
+                timeElement.style.left = `50%`;
+                timeElement.style.fontSize = `${textSize}px`;
+                timeElement.style.transform = `translate(-50%, -50%) rotate(-${counterDegree}deg)`;
+                counterDegree = counterDegree + degreeForOneRotate;
+            }
+        }
+
+        function hideInput() {
+            let input = document.getElementById('Input');
+            input.style.display = 'none';
+        }
+    }
+
+</script>
+</body>
+</html>
